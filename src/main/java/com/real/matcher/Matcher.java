@@ -22,6 +22,13 @@ public interface Matcher {
     public String getExternalId() {
       return externalId;
     }
+
+	@Override
+	public String toString() {
+		return "IdMapping [internalId=" + internalId + ", externalId=" + externalId + "]";
+	}
+    
+    
   }
 
   class CsvStream {

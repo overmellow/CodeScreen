@@ -29,6 +29,7 @@ public class Demo2 {
 		Demo2 d = new Demo2();
 		try {
 			d.matchTest();
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -38,14 +39,14 @@ public class Demo2 {
 
 //	  @Test
 	  public void matchTest() throws Exception {
-		  System.out.println("hey213");
+		  System.out.println("hey21345");
 	    List<IdMapping> idMappings;
 	    // load and process the data files
 	    try (var closer = new Closer()) {
 	      var moviesCsv = loadCsvFile(closer, "movies2.csv");
 	      var actorsAndDirectorsCsv = loadCsvFile(closer, "actors_and_directors2.csv");
-	      var matcher = new MatcherImpl(moviesCsv, actorsAndDirectorsCsv);
-	      var xboxCsv = loadCsvFile(closer, "xbox_feed.csv");
+	      var matcher = new MyMatcherImpl(moviesCsv, actorsAndDirectorsCsv);
+	      var xboxCsv = loadCsvFile(closer, "xbox_feed2.csv");
 	      idMappings = matcher.match(DatabaseType.XBOX, xboxCsv);
 	    }
 	    LOGGER.info("Total items matched: {}", idMappings.size());
@@ -56,6 +57,7 @@ public class Demo2 {
 	      var internalId = mapping.getInternalId();
 //	      assertTrue(internalId > 0);
 	      var externalId = mapping.getExternalId();
+	      System.out.println(mapping);
 //	      assertNotNull(externalId);
 //	      assertTrue(seenExternal.add(UUID.fromString(externalId)), "already seen: " + externalId);
 	    }

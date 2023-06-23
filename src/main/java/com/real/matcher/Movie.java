@@ -5,7 +5,7 @@ import java.util.Objects;
 import java.util.Set;
 
 public class Movie {
-	private String id;
+	private int id;
 	private String title;
 	private String year;
 	private Set<String> directors;
@@ -13,7 +13,12 @@ public class Movie {
 	
 	public Movie() {}
 	
-	public Movie(String id, String title, String year) {
+	public Movie(String title, String year) {
+		this.title = title;
+		this.year = year;
+	}
+			
+	public Movie(int id, String title, String year) {
 		this.id = id;
 		this.title = title;
 		this.year = year;
@@ -21,10 +26,10 @@ public class Movie {
 		this.directors = new HashSet<String>();
 	}
 
-	public String getId() {
+	public int getId() {
 		return id;
 	}
-	public void setId(String id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 	public String getTitle() {
@@ -71,12 +76,12 @@ public class Movie {
             return false;
         
         Movie other = (Movie) obj;
-        return id.equals(other.id) && title.equals(other.title) && year.equals(other.year);
+        return title.equals(other.title) && year.equals(other.year);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, title, year);
+        return Objects.hash(title, year);
     }
 	
 }
