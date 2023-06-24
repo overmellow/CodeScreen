@@ -1,4 +1,4 @@
-package com.real.matcher;
+package com.real.matcher2;
 
 //import static org.junit.jupiter.api.Assertions.assertFalse;
 //import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -23,6 +23,7 @@ import com.real.matcher.Matcher.CsvStream;
 import com.real.matcher.Matcher.DatabaseType;
 import com.real.matcher.Matcher.IdMapping;
 //import com.real.matcher.MatcherImplTest.Closer;
+import com.real.matcher.MatcherImpl;
 
 public class Demo2 {
 	public static void main(String[] args) {
@@ -39,18 +40,19 @@ public class Demo2 {
 
 //	  @Test
 	  public void matchTest() throws Exception {
-		  System.out.println("hey21345");
+		  System.out.println("hey21343sds2");
 	    List<IdMapping> idMappings;
 	    // load and process the data files
 	    try (var closer = new Closer()) {
-	      var moviesCsv = loadCsvFile(closer, "movies2.csv");
-	      var actorsAndDirectorsCsv = loadCsvFile(closer, "actors_and_directors2.csv");
+	      var moviesCsv = loadCsvFile(closer, "movies.csv");
+	      var actorsAndDirectorsCsv = loadCsvFile(closer, "actors_and_directors.csv");
 	      var matcher = new MyMatcherImpl(moviesCsv, actorsAndDirectorsCsv);
-	      var xboxCsv = loadCsvFile(closer, "xbox_feed2.csv");
+	      var xboxCsv = loadCsvFile(closer, "xbox_feed.csv");
 	      idMappings = matcher.match(DatabaseType.XBOX, xboxCsv);
 	    }
 	    LOGGER.info("Total items matched: {}", idMappings.size());
 	    // test the results
+		System.out.println();
 //	    assertTrue(idMappings.size() > 0, "Nothing matched!");
 	    var seenExternal = new HashSet<UUID>();
 	    for (var mapping : idMappings) {

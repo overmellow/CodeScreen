@@ -1,4 +1,4 @@
-package com.real.matcher;
+package com.real.matcher2;
 
 import java.util.HashSet;
 import java.util.Objects;
@@ -63,8 +63,7 @@ public class Movie {
 
 	@Override
 	public String toString() {
-		return "Movie [id=" + id + ", title=" + title + ", year=" + year + ", directors=" + directors + ", casts="
-				+ casts + "]";
+		return "Movie [id=" + id + ", title=" + title + ", year=" + year + ", directors=" + directors + ", casts=" + casts + "]";
 	}	
 	
 	
@@ -76,12 +75,21 @@ public class Movie {
             return false;
         
         Movie other = (Movie) obj;
-        return title.equals(other.title) && year.equals(other.year);
+        return this.id == other.id && title.equals(other.title) && year.equals(other.year);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(title, year);
+        return Objects.hash(id, title, year);
     }
-	
+    
+    public Movie merge(Movie other) {
+        // Merge logic based on your requirements
+        // Here, we simply concatenate the names
+    	this.casts.addAll(other.casts);
+    	this.directors.addAll(other.directors);
+    	return this;
+    }
+    
+    
 }

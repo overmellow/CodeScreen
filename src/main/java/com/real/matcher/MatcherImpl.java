@@ -12,17 +12,19 @@ import org.slf4j.LoggerFactory;
 
 public class MatcherImpl implements Matcher {
 
-	  private static final Logger LOGGER = LoggerFactory.getLogger(MatcherImpl.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(MatcherImpl.class);
 
-	  public MatcherImpl(CsvStream movieDb, CsvStream actorAndDirectorDb) {
-	    LOGGER.info("importing database");
-	    // TODO implement me
-	    LOGGER.info("database imported");
-	  }
+	public MatcherImpl(CsvStream movieDb, CsvStream actorAndDirectorDb) {
+		LOGGER.info("importing database");
+		// TODO implement me
+		LOGGER.info("database imported");
+	}
 
-	  @Override
-	  public List<IdMapping> match(DatabaseType databaseType, CsvStream externalDb) {
-	    // TODO implement me
-	    return Collections.emptyList();
-	  }
+	@Override
+	public List<IdMapping> match(DatabaseType databaseType, CsvStream externalDb) {
+		// 	TODO implement me
+		return Collections.emptyList();
+	}
+	  
+	
 }

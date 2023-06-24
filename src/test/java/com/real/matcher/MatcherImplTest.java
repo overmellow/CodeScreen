@@ -24,7 +24,7 @@ public class MatcherImplTest {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(MatcherImplTest.class);
 
-  @Test
+//  @Test
   public void matchTest() throws Exception {
     List<IdMapping> idMappings;
     // load and process the data files

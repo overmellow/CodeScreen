@@ -6,6 +6,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import com.real.matcher.Matcher.CsvStream;
 import com.real.matcher.Matcher.DatabaseType;
 import com.real.matcher.Matcher.IdMapping;
+import com.real.matcher2.MyMatcherImpl;
+
 import java.io.BufferedReader;
 import java.io.Closeable;
 import java.io.IOException;
@@ -29,10 +31,10 @@ public class MyMatcherImplTest {
     List<IdMapping> idMappings;
     // load and process the data files
     try (var closer = new Closer()) {
-      var moviesCsv = loadCsvFile(closer, "movies.csv");
-      var actorsAndDirectorsCsv = loadCsvFile(closer, "actors_and_directors.csv");
+      var moviesCsv = loadCsvFile(closer, "movies2.csv");
+      var actorsAndDirectorsCsv = loadCsvFile(closer, "actors_and_directors2.csv");
       var matcher = new MyMatcherImpl(moviesCsv, actorsAndDirectorsCsv);
-      var xboxCsv = loadCsvFile(closer, "xbox_feed.csv");
+      var xboxCsv = loadCsvFile(closer, "xbox_feed2.csv");
       idMappings = matcher.match(DatabaseType.XBOX, xboxCsv);
     }
     LOGGER.info("Total items matched: {}", idMappings.size());
