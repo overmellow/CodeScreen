@@ -8,8 +8,6 @@ public class Movie {
 	private int id;
 	private String title;
 	private String year;
-	private Set<String> directors;
-	private Set<String> casts;
 	private Set<Crew> crew;
 	
 	public Movie() {}
@@ -23,8 +21,7 @@ public class Movie {
 		this.id = id;
 		this.title = title;
 		this.year = year;
-		this.casts = new HashSet<String>();
-		this.directors = new HashSet<String>();
+		this.crew = new HashSet<>();
 	}
 
 	public int getId() {
@@ -46,25 +43,17 @@ public class Movie {
 		this.year = year;
 	}
 
-	public Set<String> getDirectors() {
-		return directors;
+	public Set<Crew> getCrew() {
+		return crew;
 	}
 
-	public void setDirectors(Set<String> directors) {
-		this.directors = directors;
-	}
-
-	public Set<String> getCasts() {
-		return casts;
-	}
-
-	public void setCasts(Set<String> casts) {
-		this.casts = casts;
+	public void setCrew(Set<Crew> crew) {
+		this.crew = crew;
 	}
 
 	@Override
 	public String toString() {
-		return "Movie [id=" + id + ", title=" + title + ", year=" + year + ", directors=" + directors + ", casts=" + casts + "]";
+		return "Movie [id=" + id + ", title=" + title + ", year=" + year + ", crew=" + crew + "]";
 	}	
 	
 	
@@ -85,10 +74,7 @@ public class Movie {
     }
     
     public Movie merge(Movie other) {
-        // Merge logic based on your requirements
-        // Here, we simply concatenate the names
-    	this.casts.addAll(other.casts);
-    	this.directors.addAll(other.directors);
+		this.crew.addAll(other.crew);
     	return this;
     }
     

@@ -1,13 +1,8 @@
 package com.real.matcher3;
 
-//import static org.junit.jupiter.api.Assertions.assertFalse;
-//import static org.junit.jupiter.api.Assertions.assertNotNull;
-//import static org.junit.jupiter.api.Assertions.assertTrue;
-
 import com.real.matcher.Matcher.CsvStream;
 import com.real.matcher.Matcher.DatabaseType;
 import com.real.matcher.Matcher.IdMapping;
-import com.real.matcher.MatcherImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -18,9 +13,9 @@ import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
 
-public class Demo2 {
+public class Demo {
 	public static void main(String[] args) {
-		Demo2 d = new Demo2();
+		Demo d = new Demo();
 		try {
 			d.matchTest();
 			
@@ -29,32 +24,27 @@ public class Demo2 {
 		}
 	}
 	
-	private static final Logger LOGGER = LoggerFactory.getLogger(Demo2.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(Demo.class);
 
 //	  @Test
 	  public void matchTest() throws Exception {
-		  System.out.println("hey21343sds2");
 	    List<IdMapping> idMappings;
 	    // load and process the data files
 	    try (var closer = new Closer()) {
 	      var moviesCsv = loadCsvFile(closer, "movies.csv");
 	      var actorsAndDirectorsCsv = loadCsvFile(closer, "actors_and_directors.csv");
-	      var matcher = new MyMatcherImpl(moviesCsv, actorsAndDirectorsCsv);
+	      var matcher = new MatcherImpl(moviesCsv, actorsAndDirectorsCsv);
 	      var xboxCsv = loadCsvFile(closer, "xbox_feed.csv");
 	      idMappings = matcher.match(DatabaseType.XBOX, xboxCsv);
 	    }
 	    LOGGER.info("Total items matched: {}", idMappings.size());
 	    // test the results
 		System.out.println();
-//	    assertTrue(idMappings.size() > 0, "Nothing matched!");
 	    var seenExternal = new HashSet<UUID>();
 	    for (var mapping : idMappings) {
 	      var internalId = mapping.getInternalId();
-//	      assertTrue(internalId > 0);
 	      var externalId = mapping.getExternalId();
 //	      System.out.println(mapping);
-//	      assertNotNull(externalId);
-//	      assertTrue(seenExternal.add(UUID.fromString(externalId)), "already seen: " + externalId);
 	    }
 	  }
 
@@ -63,7 +53,6 @@ public class Demo2 {
 	    var stream = MatcherImpl.class.getClassLoader().getResourceAsStream(fileName);
 	    var reader = closer.register(fileName, new BufferedReader(new InputStreamReader(stream, StandardCharsets.UTF_8)));
 	    var header = reader.readLine().trim();
-//	    assertFalse(header.isBlank());
 	    LOGGER.info("headers: {}", header);
 	    var lines = reader
 	        .lines()

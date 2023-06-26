@@ -12,6 +12,7 @@ public class InternalDB {
 	private Map<Integer, Movie> moviesMap = new HashMap<>();
 	private Map<Movie, Integer> moviesReverseMap = new HashMap<>();
 //	private Map<Integer, List<Integer>> duplicates = new HashMap<>();
+
 	public InternalDB(CsvStream movieDb, CsvStream actorAndDirectorDb) {
 		loadMovies(movieDb);
 		loadActorsAndDirectors(actorAndDirectorDb);
@@ -19,18 +20,20 @@ public class InternalDB {
 		reverseMap();
 		
 		System.out.println();
-//		moviesMap.forEach((name, obj) -> System.out.println(name + ": " + obj));
+		moviesMap.forEach((name, obj) -> System.out.println(name + ": " + obj));
 		System.out.println();
 	}
 	
 	private void loadMovies(CsvStream movieDb) {
+		Map<String, Integer> headerIndices = extractHeadersIndices(movieDb);
+
 	    moviesMap = movieDb.getDataRows()
 	    		.distinct()
                 .map(entry -> entry.split(","))
                 .collect(
             		Collectors.toMap(
-    					arr -> Integer.parseInt(arr[0]), 
-    					arr -> new Movie(Integer.parseInt(arr[0]), arr[1].replaceAll("\"", ""), arr[2]), 
+    					arr -> Integer.parseInt(arr[headerIndices.get("id")]),
+    					arr -> new Movie(Integer.parseInt(arr[headerIndices.get("id")]), arr[headerIndices.get("title")].replaceAll("\"", ""), arr[headerIndices.get("year")]),
         				(v1, v2) -> v1, 		// Handle duplicate keys by keeping the existing value
 //    					(v1, v2) -> {
 ////    						v1.merge(v2);
@@ -43,18 +46,16 @@ public class InternalDB {
 	}
 	
 	private void loadActorsAndDirectors(CsvStream actorAndDirectorDb) {
+		Map<String, Integer> headerIndices = extractHeadersIndices(actorAndDirectorDb);
 	    actorAndDirectorDb.getDataRows()
 	    	.distinct()
 		    .map(s -> s.split(","))
 	    	.forEach(arr -> {
 				Movie m;
-				if((m = moviesMap.get(Integer.parseInt(arr[0]))) != null) {
-					if(arr[2].equals("cast")) { 
-						m.getCasts().add(arr[1]);
-					}
-					else if(arr[2].equals("director")){
-						m.getDirectors().add(arr[1]);
-					}
+				if((m = moviesMap.get(Integer.parseInt(arr[headerIndices.get("movie_id")]))) != null) {
+					String name = arr[headerIndices.get("name")];
+					String role = arr[headerIndices.get("role")];
+					m.getCrew().add(new Crew(name, role));
 				}
 	    	});
 //	    moviesBiMap.forEach((name, obj) -> System.out.println(name + ": " + obj));
@@ -92,6 +93,15 @@ public class InternalDB {
 	
 	public Map<Movie, Integer> getDBInverse() {
 		return moviesReverseMap;
+	}
+
+	private Map<String, Integer> extractHeadersIndices(CsvStream externalDb) {
+		Map<String, Integer> headerIndices = new HashMap<>();
+		String[] headers = externalDb.getHeaderRow().split(",");
+		for (int i = 0; i < headers.length; i++) {
+			headerIndices.put(headers[i], i);
+		}
+		return headerIndices;
 	}
 	
 }
