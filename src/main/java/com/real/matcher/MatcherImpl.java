@@ -1,29 +1,41 @@
 package com.real.matcher;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class MatcherImpl implements Matcher {
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(MatcherImpl.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(com.real.matcher.MatcherImpl.class);
+	private static InternalDB internalDB;
+//	private static InternalDBWithLucene internalDBWithLucene;
+	private final FeederFactory feederFactory;
 
 	public MatcherImpl(CsvStream movieDb, CsvStream actorAndDirectorDb) {
-		LOGGER.info("importing database");
-		// TODO implement me
-		LOGGER.info("database imported");
-	}
+	    LOGGER.info("importing database");
+	    
+	    internalDB = new InternalDB(movieDb, actorAndDirectorDb);
+	    
+//	    internalDBWithLucene = new InternalDBWithLucene(movieDb, actorAndDirectorDb);
+	        
+	    LOGGER.info("database imported");
+	    
+	    feederFactory = new XboxFeederFactory();
+	    
+	    
+//	    feederFactory = new XboxLuceneFeederFactory();
+	    
+	  }
 
 	@Override
 	public List<IdMapping> match(DatabaseType databaseType, CsvStream externalDb) {
-		// 	TODO implement me
-		return Collections.emptyList();
+	  
+		Feeder feeder = feederFactory.createFeeder(internalDB);
+	  
+	  	List<IdMapping> mappings = feeder.match(externalDb);
+	  
+	  	return mappings;
 	}
 	  
 	

@@ -29,6 +29,7 @@ public class Demo {
 		Demo d = new Demo();
 		try {
 			d.matchTest();
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -45,7 +46,7 @@ public class Demo {
 	      var actorsAndDirectorsCsv = loadCsvFile(closer, "actors_and_directors.csv");
 	      var matcher = new MatcherImpl(moviesCsv, actorsAndDirectorsCsv);
 	      var xboxCsv = loadCsvFile(closer, "xbox_feed.csv");
-	      idMappings = matcher.match(DatabaseType.XBOX, xboxCsv);
+	      idMappings = matcher.match(DatabaseType.AMAZON_INSTANT, xboxCsv);
 	    }
 	    LOGGER.info("Total items matched: {}", idMappings.size());
 	    // test the results

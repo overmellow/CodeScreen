@@ -3,9 +3,12 @@ package com.real.matcher;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import org.junit.jupiter.api.Test;
+
 import com.real.matcher.Matcher.CsvStream;
 import com.real.matcher.Matcher.DatabaseType;
 import com.real.matcher.Matcher.IdMapping;
+
 import java.io.BufferedReader;
 import java.io.Closeable;
 import java.io.IOException;
@@ -16,7 +19,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
-import org.junit.jupiter.api.Test;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -24,7 +27,7 @@ public class MatcherImplTest {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(MatcherImplTest.class);
 
-//  @Test
+  @Test
   public void matchTest() throws Exception {
     List<IdMapping> idMappings;
     // load and process the data files
